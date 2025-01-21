@@ -1,0 +1,55 @@
+{% extends "nav.html" %}
+
+
+
+{% block title%}
+
+products
+
+{% endblock title %}
+
+
+{% block banner %}{% endblock banner %}
+
+{% block content %}
+
+
+    <!-- All Products -->
+{% load static %}
+
+
+    <div class="small-container">
+        <div class="row row-2">
+            <h2>All Products</h2>
+        </div>  
+        <div class="row">
+            {% for product in products %}
+            <div class="col-4">
+                <a href="{% url 'details-page' product.id %}">
+                    <img src="{{product.image.url}}">
+                </a>
+                <h4>{{product.name}}</h4>
+                <p>{{product.price}}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+
+
+
+
+    <script>
+        var MenuItems = document.getElementById("MenuItems");
+        MenuItems.style.maxHeight = "0px";
+        function menutoggle() {
+            if (MenuItems.style.maxHeight == "0px") {
+                MenuItems.style.maxHeight = "200px"
+            }
+            else {
+                MenuItems.style.maxHeight = "0px"
+            }
+        }
+    </script>
+
+{% endblock content %}
