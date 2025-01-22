@@ -76,28 +76,53 @@ def cart(request):
         return redirect('profile-creation')  # Replace this with an actual profile creation view URL
 
 
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
+from django.db import transaction
+
 def addtocart(request):
     if request.method == 'POST':
-        user = request.user
-        if hasattr(user, 'profile'):
+        try:
+            user = request.user
+            if not hasattr(user, 'profile'):
+                messages.error(request, "You need to create a profile to add items to the cart.")
+                return redirect('cart')
+            
             customer = user.profile
-            quantity = int(request.POST.get('quantity'))
             product_id = request.POST.get('product_id')
-            cart_obj, created = Order.objects.get_or_create(
-                owner=customer,
-                orderstatus=Order.CART_STAGE
-            )
+            quantity = int(request.POST.get('quantity', 1)) 
+
+            
             product = get_object_or_404(Products, pk=product_id)
-            order_item, created = CartItems.objects.get_or_create(
-                product=product,
-                owner=cart_obj,
-            )
-            order_item.quantity += quantity
-            order_item.save()
+
+            with transaction.atomic():
+                cart_obj, created = Order.objects.get_or_create(
+                    owner=customer,
+                    orderstatus=Order.CART_STAGE,
+                    defaults={
+                        'name': customer.name or "Default Name",
+                        'place': "Default Place",
+                        'address': "Default Address",
+                        'email': customer.user.email,
+                        'phonenumber': 1234567890, 
+                        'city': "Default City",
+                    }
+                )
+
+                order_item, created = CartItems.objects.get_or_create(
+                    product=product,
+                    owner=cart_obj,
+                )
+                if not created:
+                    order_item.quantity += quantity
+                    order_item.save()
+
             messages.success(request, "Item added to cart.")
-        else:
-            messages.error(request, "You need to create a profile to add items to the cart.")
+        except Exception as e:
+            messages.error(request, f"An error occurred: {str(e)}")
+            return redirect('cart')
     return redirect('cart')
+
 
 
 def removeitem(request, pk):
