@@ -35,10 +35,16 @@ p{
     color: #555;
 }
 .container{
-    max-width: 1300px;
     margin: auto;
     padding-left: 25px;
     padding-right: 25px;
+}
+.arow{
+    background: radial-gradient(#fff,#ffd6d6);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 .row{
     display: flex;
@@ -502,6 +508,9 @@ form a{
         display: block;
         cursor: pointer;
     }
+    .arow{
+        margin-left: 50px;
+    }
 }
 
 /* Media query for 600 screen size */
@@ -529,5 +538,9 @@ form a{
     .footer{
         margin-left: 0px;
         margin-right: 0px;
+    }
+
+    .arow{
+        margin-left: 50px;
     }
 }
