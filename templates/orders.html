@@ -1,65 +1,54 @@
 
 {% extends "nav.html" %}
 
-
 {% block title %}
 orders
-
 {% endblock title %}
 
-
 {% block banner %}{% endblock banner %}
-
-
-
 
 {% block content %}
 {% load static %}
 {% load status %}
-
-    <div class="small-container cart-page">
-        {% if orders_with_items %}
-        <table>
-            <tr>
-                <th>Order ID</th>
-                <th>Order Status</th>
-                <th>Ordered Products</th>
-            </tr>
-            {% for order_data in orders_with_items %}
+        <div class="small-container cart-page">
+            {% if orders_with_items %}
+            <table>
                 <tr>
-                    <td>{{ order_data.order.id }}</td>
-                    <td>{{ order_data.order.get_orderstatus_display }}</td>
-                    <td>
-                        <ul>
-                            {% for item in order_data.items %}
-                                <li>{{ item.product.name }} - Quantity: {{ item.quantity }}</li>
-                            {% endfor %}
-                        </ul>
-                    </td>
+                    <th>Order ID</th>
+                    <th>Order Status</th>
+                    <th>Ordered Products</th>
                 </tr>
-            {% endfor %}
-        </table>
-    {% else %}
-        <h1>You have no orders</h1>
-    {% endif %}
-         
-    </div>
+                {% for order_data in orders_with_items %}
+                    <tr>
+                        <td>{{ order_data.order.id }}</td>
+                        <td>{{ order_data.order.get_orderstatus_display }}</td>
+                        <td>
+                            <ul>
+                                {% for item in order_data.items %}
+                                    <li>{{ item.product.name }} - Quantity: {{ item.quantity }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <h1>You have no orders</h1>
+        {% endif %} 
+        </div>
 
-    <!-- javascript -->
+        <!-- javascript -->
 
-    <script>
-        var MenuItems = document.getElementById("MenuItems");
-        MenuItems.style.maxHeight = "0px";
-        function menutoggle() {
-            if (MenuItems.style.maxHeight == "0px") {
-                MenuItems.style.maxHeight = "200px"
-            }
-            else {
-                MenuItems.style.maxHeight = "0px"
-            }
-        }        
-    </script>
-</body>
-
-</html>
+        <script>
+            var MenuItems = document.getElementById("MenuItems");
+            MenuItems.style.maxHeight = "0px";
+            function menutoggle() {
+                if (MenuItems.style.maxHeight == "0px") {
+                    MenuItems.style.maxHeight = "200px"
+                }
+                else {
+                    MenuItems.style.maxHeight = "0px"
+                }
+            }        
+        </script>
 {% endblock content %}
