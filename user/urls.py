@@ -18,7 +18,7 @@ urlpatterns = [
     path('orderform/',views.orderform,name='orderform'),
     path('checkout/',views.checkout,name='checkout'),
     path('orders/',views.orders,name='orders'),
-   path('profile-creation/', views.profile_creation, name='profile-creation'),
+    path('profile-creation/', views.profile_creation, name='profile-creation'),
 
 ]
 
