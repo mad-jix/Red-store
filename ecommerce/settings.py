@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-y&*qf2c9g&#mo-+bz1a2m8fs6b7w5%c1la0d_+(v8e!0g-hveu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "red-store-1.onrender.com").split(",")
+ALLOWED_HOSTS = ['*']
+
 
 
 
